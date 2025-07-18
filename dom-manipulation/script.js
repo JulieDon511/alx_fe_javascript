@@ -1,0 +1,1 @@
+const quotesArray =["Text", "catergory"];
