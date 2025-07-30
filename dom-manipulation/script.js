@@ -142,17 +142,22 @@ function addQuote() {
 window.addEventListener("load", () => {
   populateCategories();
 });
-function fetchQuotesFromServer() {
-  fetch("https://jsonplaceholder.typicode.com/posts?_limit=5")
-    .then(res => res.json())
-    .then(data => {
-      const serverQuotes = data.map(d => ({
-        text: d.title,
-        category: "server"
-      }));
-      resolveConflicts(serverQuotes);
-    });
+async function fetchQuotesFromServer() {
+  try {
+    const response = await fetch("https://jsonplaceholder.typicode.com/posts?_limit=5");
+    const data = await response.json();
+
+    const serverQuotes = data.map(d => ({
+      text: d.title,
+      category: "server"
+    }));
+
+    resolveConflicts(serverQuotes);
+  } catch (error) {
+    console.error("Error fetching from server:", error);
+  }
 }
+
 setInterval(fetchQuotesFromServer, 30000); // Every 30 seconds
 function resolveConflicts(serverQuotes) {
   const existingTexts = quotes.map(q => q.text);
