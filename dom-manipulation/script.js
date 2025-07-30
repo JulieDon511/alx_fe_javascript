@@ -9,8 +9,9 @@ document.getElementById("newQuote").addEventListener("click", showRandomQuote);
 function showRandomQuote() {
   const random = Math.floor(Math.random() * quotes.length);
   const quote = quotes[random];
-  quoteDisplay.textContent = `"${quote.text}" [${quote.category}]`;
+  quoteDisplay.innerHTML = `"${quote.text}" [${quote.category}]`;
   sessionStorage.setItem("lastQuote", JSON.stringify(quote));
+  
 }
 
 function createAddQuoteForm() {
