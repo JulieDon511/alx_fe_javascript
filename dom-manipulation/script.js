@@ -204,5 +204,5 @@ function syncQuotes() {
     postQuoteToServer(quote);
   });
 
-  console.log("Quote sync initiated.");
+  console.log ("Quotes synced with server!");
 }
