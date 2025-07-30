@@ -178,6 +178,8 @@ async function postQuoteToServer(quote) {
   }
 }
 setInterval(fetchQuotesFromServer, 30000); // Every 30 seconds
+document.getElementById("syncButton").addEventListener("click", syncQuotes);
+
 function resolveConflicts(serverQuotes) {
   const existingTexts = quotes.map(q => q.text);
   const newFromServer = serverQuotes.filter(q => !existingTexts.includes(q.text));
@@ -192,4 +194,15 @@ function resolveConflicts(serverQuotes) {
 }
 function notifyUpdate(count) {
   alert(`${count} new quote(s) synced from server.`);
+}
+function syncQuotes() {
+  // 🔄 Pull new quotes from server
+  fetchQuotesFromServer();
+
+  // 📤 Push all local quotes to server (optional, use with caution!)
+  quotes.forEach(quote => {
+    postQuoteToServer(quote);
+  });
+
+  console.log("Quote sync initiated.");
 }
