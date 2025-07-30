@@ -18,16 +18,32 @@ function createAddQuoteForm() {
   // Already handled in HTML - this function can be used to dynamically generate form if desired
 }
 function addQuote() {
-  const text = document.getElementById("newQuoteText").value.trim();
-  const category = document.getElementById("newQuoteCategory").value.trim();
+  const textInput = document.getElementById("newQuoteText");
+  const categoryInput = document.getElementById("newQuoteCategory");
+
+  const text = textInput.value.trim();
+  const category = categoryInput.value.trim();
 
   if (text && category) {
     const newQuote = { text, category };
     quotes.push(newQuote);
     saveQuotes();
-    alert("Quote added successfully!");
-    document.getElementById("newQuoteText").value = "";
-    document.getElementById("newQuoteCategory").value = "";
+
+    // Create DOM elements dynamically
+    const quoteElement = document.createElement("p");
+    const categoryElement = document.createElement("small");
+
+    quoteElement.textContent = `"${newQuote.text}"`;
+    categoryElement.textContent = `[${newQuote.category}]`;
+
+    quoteDisplay.innerHTML = ""; // Clear previous quote
+    quoteDisplay.appendChild(quoteElement);
+    quoteDisplay.appendChild(categoryElement);
+
+    // Clear inputs
+    textInput.value = "";
+    categoryInput.value = "";
+    alert("Quote added and displayed successfully!");
   } else {
     alert("Please enter both quote and category.");
   }
