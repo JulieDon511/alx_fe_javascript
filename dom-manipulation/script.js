@@ -157,7 +157,26 @@ async function fetchQuotesFromServer() {
     console.error("Error fetching from server:", error);
   }
 }
+async function postQuoteToServer(quote) {
+  try {
+    const response = await fetch("https://jsonplaceholder.typicode.com/posts", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        title: quote.text,
+        body: quote.category,
+        userId: 1
+      })
+    });
 
+    const result = await response.json();
+    console.log("Posted to server:", result);
+  } catch (error) {
+    console.error("Error posting quote:", error);
+  }
+}
 setInterval(fetchQuotesFromServer, 30000); // Every 30 seconds
 function resolveConflicts(serverQuotes) {
   const existingTexts = quotes.map(q => q.text);
